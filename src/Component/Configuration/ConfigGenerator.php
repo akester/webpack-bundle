@@ -50,7 +50,16 @@ class ConfigGenerator
 
         // Apply headers
         $code[] = $this->getChunks(CodeBlock::HEADER);
+        $code[] = '';
+
+        /* Start config object */
         $code[] = 'module.exports = {';
+
+        // Add output config
+        $code[] = 'output : ' . json_encode(
+            $this->getChunks(CodeBlock::OUTPUT, false, false),
+            JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+        ) . ',';
 
         // Apply entries (split points)
         $code[] = '';
@@ -58,38 +67,35 @@ class ConfigGenerator
             $this->getChunks(CodeBlock::ENTRY, false, false),
             JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
         ) . ',';
-        $code[] = 'output : ' . json_encode(
-            $this->getChunks(CodeBlock::OUTPUT, false, false),
-            JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-        ) . ',';
-        $code[] = 'resolve : ' . json_encode(
-            $this->getChunks(CodeBlock::RESOLVE, false, false),
-            JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-        ) . ',';
-        $code[] = 'resolveLoader : ' . json_encode(
-            $this->getChunks(CodeBlock::RESOLVE_LOADER, false, false),
-            JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-        ) . ',';
-        $code[] = 'plugins : [';
-        $code[] = $tab1 . $this->getChunks(CodeBlock::PLUGIN, ', ' . PHP_EOL . $tab1, ',' . PHP_EOL . $tab1);
-        $code[] = '],';
-        $code[] = 'module : {';
-        $code[] = $tab1 . 'preLoaders : [';
-        $code[] = $tab2 . $this->getChunks(CodeBlock::PRE_LOADER, ',' . PHP_EOL . $tab2, ',' . PHP_EOL . $tab2);
-        $code[] = $tab1 . '],';
-        $code[] = $tab1 . 'loaders : [';
-        $code[] = $tab2 . $this->getChunks(CodeBlock::LOADER, ',' . PHP_EOL . $tab2, ',' . PHP_EOL . $tab2);
-        $code[] = $tab1 . '],';
-        $code[] = $tab1 . 'postLoaders : [';
-        $code[] = $tab2 . $this->getChunks(CodeBlock::POST_LOADER, ',' . PHP_EOL . $tab2, ',' . PHP_EOL . $tab2);
-        $code[] = $tab1 . ']';
 
-        if (!empty($this->getChunks(CodeBlock::ROOT))) {
-            $code[] = '},';
-            $code[] = $this->getChunks(CodeBlock::ROOT);
-        } else {
-            $code[] = '}';
-        }
+//         $code[] = 'resolve : ' . json_encode(
+//             $this->getChunks(CodeBlock::RESOLVE, false, false),
+//             JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+//         ) . ',';
+//         $code[] = 'resolveLoader : ' . json_encode(
+//             $this->getChunks(CodeBlock::RESOLVE_LOADER, false, false),
+//             JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+//         ) . ',';
+//         $code[] = 'plugins : [';
+//         $code[] = $tab1 . $this->getChunks(CodeBlock::PLUGIN, ', ' . PHP_EOL . $tab1, ',' . PHP_EOL . $tab1);
+//         $code[] = '],';
+//         $code[] = 'module : {';
+//         $code[] = $tab1 . 'preLoaders : [';
+//         $code[] = $tab2 . $this->getChunks(CodeBlock::PRE_LOADER, ',' . PHP_EOL . $tab2, ',' . PHP_EOL . $tab2);
+//         $code[] = $tab1 . '],';
+//         $code[] = $tab1 . 'loaders : [';
+//         $code[] = $tab2 . $this->getChunks(CodeBlock::LOADER, ',' . PHP_EOL . $tab2, ',' . PHP_EOL . $tab2);
+//         $code[] = $tab1 . '],';
+//         $code[] = $tab1 . 'postLoaders : [';
+//         $code[] = $tab2 . $this->getChunks(CodeBlock::POST_LOADER, ',' . PHP_EOL . $tab2, ',' . PHP_EOL . $tab2);
+//         $code[] = $tab1 . ']';
+
+//         if (!empty($this->getChunks(CodeBlock::ROOT))) {
+//             $code[] = '},';
+//             $code[] = $this->getChunks(CodeBlock::ROOT);
+//         } else {
+//             $code[] = '}';
+//         }
 
         $code[] = '};';
         $code[] = '';
