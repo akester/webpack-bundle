@@ -24,9 +24,9 @@ final class ResolveConfig implements ConfigInterface, ConfigExtensionInterface
     {
         $this->config = $config;
 
-        // Apply node_modules path to resolve.root
+        // Apply node_modules path to resolve.modules
         if (! empty($config['node']['node_modules_path'])) {
-            $this->config['resolve']['root'][] = $config['node']['node_modules_path'];
+            $this->config['resolve']['modules'][] = $config['node']['node_modules_path'];
         }
     }
 
@@ -37,7 +37,7 @@ final class ResolveConfig implements ConfigInterface, ConfigExtensionInterface
      */
     public function addAlias($path, $alias = null)
     {
-        $this->config['resolve']['root'][] = $path;
+        $this->config['resolve']['modules'][] = $path;
         if ($alias !== null) {
             $this->config['resolve']['alias'][$alias] = $path;
         }
@@ -52,7 +52,7 @@ final class ResolveConfig implements ConfigInterface, ConfigExtensionInterface
             ->arrayNode('resolve')
                 ->addDefaultsIfNotSet()
                 ->children()
-                    ->arrayNode('root')
+                    ->arrayNode('modules')
                         ->requiresAtLeastOneElement()
                         ->addDefaultChildrenIfNoneSet(0)
                         ->prototype('scalar')->defaultValue('%kernel.root_dir%/Resources')->end()
@@ -61,14 +61,8 @@ final class ResolveConfig implements ConfigInterface, ConfigExtensionInterface
                         ->useAttributeAsKey('name')
                         ->prototype('scalar')->end()
                     ->end()
-                    ->arrayNode('modules_directories')
-                        ->prototype('scalar')->end()
-                    ->end()
-                    ->arrayNode('fallback')
-                        ->prototype('scalar')->end()
-                    ->end()
                     ->arrayNode('extensions')
-                        ->defaultValue(["", ".webpack.js", ".web.js", ".js"])
+                        ->defaultValue([".webpack.js", ".web.js", ".js"])
                         ->prototype('scalar')->end()
                     ->end()
                 ->end()

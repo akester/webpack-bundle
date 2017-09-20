@@ -127,13 +127,13 @@ class Compiler
     }
 
     /**
-     * Adds root & alias configuration entries.
+     * Adds modules & alias configuration entries.
      */
     private function addResolveConfig()
     {
         $aliases = $this->tracker->getAliases();
         $this->generator->addBlock(
-            (new CodeBlock())->set(CodeBlock::RESOLVE, ['alias' => $aliases, 'root' => array_values($aliases)])
+            (new CodeBlock())->set(CodeBlock::RESOLVE, ['alias' => $aliases, 'modules' => array_values($aliases)])
         );
     }
 

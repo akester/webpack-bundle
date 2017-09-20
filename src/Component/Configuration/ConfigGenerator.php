@@ -68,10 +68,12 @@ class ConfigGenerator
             JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
         ) . ',';
 
-//         $code[] = 'resolve : ' . json_encode(
-//             $this->getChunks(CodeBlock::RESOLVE, false, false),
-//             JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-//         ) . ',';
+        // Resolve config
+        $code[] = 'resolve : ' . json_encode(
+            $this->getChunks(CodeBlock::RESOLVE, false, false),
+            JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+        ) . ',';
+
 //         $code[] = 'resolveLoader : ' . json_encode(
 //             $this->getChunks(CodeBlock::RESOLVE_LOADER, false, false),
 //             JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
