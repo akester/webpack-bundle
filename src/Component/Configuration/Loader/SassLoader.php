@@ -52,46 +52,50 @@ final class SassLoader implements LoaderInterface, ConfigExtensionInterface
             return [$block];
         }
 
-        $tab1   = str_repeat(' ', 4); // "one tab" spacing for 'pretty' output
-        $tab2   = str_repeat(' ', 8); // "two tabs" spacing for 'pretty' output
-
-        if (!empty($config['include_paths'])) {
-            $block->set(
-                CodeBlock::ROOT,
-                'sassLoader: {' . PHP_EOL .
-                    $tab1 . 'includePaths: [' . PHP_EOL .
-                        $tab2 . '\'' . implode('\',' . PHP_EOL . $tab2 . '\'', $config['include_paths']) . '\'' . PHP_EOL .
-                    $tab1 .']' . PHP_EOL .
-                '}'
-            );
-        }
-
         if (empty($config['filename'])) {
             // If the filename is not set, apply inline style tags.
-            $block->set(CodeBlock::LOADER, '{ test: /\.scss$/, loader: \'style!css!sass\' }');
+            $jsonData = array(
+                array(
+                    'loader' => 'style-loader'
+                ),
+                array(
+                    'loader' => 'css-loader'
+                ),
+                array(
+                    'loader' => 'sass-loader',
+                    'options' => array(
+                        'includePaths' => $config['include_paths']
+                    )
+                )
+            );
+            $json = sprintf('{ test: %s, use: %s }', '/\.scss$/', json_encode($jsonData));
+
+            $block->set(CodeBlock::LOADER, $json);
             return [$block];
         }
 
+
         // If a filename is set, apply the ExtractTextPlugin
-        $fn          = 'fn_extract_text_plugin_sass';
+        $fn = 'fn_extract_text_plugin_sass';
+        $jsonData = array(
+            array(
+                'loader' => 'css-loader'
+            ),
+            array(
+                'loader' => 'sass-loader',
+                'options' => array(
+                    'includePaths' => $config['include_paths']
+                )
+            )
+        );
+        $json = sprintf('{ test: %s, use: %s }', '/\.scss$/', $fn . '.extract(' . json_encode($jsonData) . ')');
         $code_blocks = [(new CodeBlock())
             ->set(CodeBlock::HEADER, 'var ' . $fn . ' = require("extract-text-webpack-plugin");')
-            ->set(CodeBlock::LOADER, '{ test: /\.scss$/, loader: '.$fn.'.extract("css!sass") }')
+            ->set(CodeBlock::LOADER, $json)
             ->set(CodeBlock::PLUGIN, 'new ' . $fn . '("' . $config['filename'] . '", {'. (
                 $config['all_chunks'] ? 'allChunks: true' : ''
             ) . '})')
         ];
-
-        if (!empty($config['include_paths'])) {
-            $code_blocks[0]->set(
-                CodeBlock::ROOT,
-                'sassLoader: {' . PHP_EOL .
-                    $tab1 . 'includePaths: [' . PHP_EOL .
-                        $tab2 . '\'' . implode('\',' . PHP_EOL . $tab2 . '\'', $config['include_paths']) . '\'' . PHP_EOL .
-                    $tab1 .']' . PHP_EOL .
-                '}'
-            );
-        }
 
         // If a common_filename is set, apply the CommonsChunkPlugin.
 //         if (! empty($this->config['output']['common_id'])) {
