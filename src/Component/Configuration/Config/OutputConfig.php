@@ -45,7 +45,7 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
                     ->scalarNode('dump_path')->defaultValue('%kernel.root_dir%/../web/bundles/')->end()
                     ->scalarNode('public_path')->defaultValue('/compiled/')->end()
                     ->scalarNode('filename')->defaultValue('[name].js')->end()
-                    ->scalarNode('common_id')->defaultValue('common')->end()
+//                     ->scalarNode('common_id')->defaultValue('common')->end()
                     ->scalarNode('chunk_filename')->defaultValue('[name].[hash].chunk.js')->end()
                     ->scalarNode('source_map_filename')->defaultValue('[file].sourcemap.js')->end()
                     ->scalarNode('devtool_module_filename_template')->defaultValue('webpack:///[resource-path]')->end()
@@ -57,7 +57,7 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
                     ->scalarNode('hot_update_main_filename')->defaultValue('[hash].hot-update.json')->end()
                     ->scalarNode('jsonp_function')->defaultValue('webpackJsonp')->end()
                     ->scalarNode('hot_update_function')->defaultValue('webpackHotUpdate')->end()
-                    ->booleanNode('path_info')->defaultFalse()->end()
+                    ->booleanNode('pathinfo')->defaultFalse()->end()
                 ->end()
             ->end();
     }
@@ -68,6 +68,9 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
         // Convert keys to camelCase.
         $config = [];
         foreach ($this->config['output'] as $key => $value) {
+            if ($key == 'dump_path') {
+                continue;
+            }
             $config[lcfirst(Container::camelize($key))] = $value;
         }
 

@@ -66,15 +66,15 @@ final class CssLoader implements LoaderInterface, ConfigExtensionInterface
         ];
 
         // If a common_filename is set, apply the CommonsChunkPlugin.
-        if (! empty($this->config['output']['common_id'])) {
-            $code_blocks[] = (new CodeBlock())
-                ->set(CodeBlock::PLUGIN, sprintf(
-                    'new %s({name: \'%s\', filename: \'%s\'})',
-                    'webpack.optimize.CommonsChunkPlugin',
-                    $this->config['output']['common_id'],
-                    $this->config['output']['common_id'] . '.js'
-                ));
-        }
+//         if (! empty($this->config['output']['common_id'])) {
+//             $code_blocks[] = (new CodeBlock())
+//                 ->set(CodeBlock::PLUGIN, sprintf(
+//                     'new %s({name: \'%s\', filename: \'%s\'})',
+//                     'webpack.optimize.CommonsChunkPlugin',
+//                     $this->config['output']['common_id'],
+//                     $this->config['output']['common_id'] . '.js'
+//                 ));
+//         }
 
         return $code_blocks;
     }

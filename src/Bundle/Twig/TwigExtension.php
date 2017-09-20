@@ -138,27 +138,27 @@ class TwigExtension extends AbstractExtension
         return rtrim($public_dir, '/') . '/' . ltrim($url, '/');
     }
 
-    /**
-     * Example: "<output_path>/<common_id>.js".
-     *
-     * @return string
-     */
-    public function webpackCommonJs()
-    {
-        $file          = $this->web_dir . '/' . $this->common_js;
-        $modified_time = file_exists($this->web_dir . '/' . $this->common_js) ? filemtime($file) : 0;
-        return $this->common_js . '?' . $modified_time;
-    }
+//     /**
+//      * Example: "<output_path>/<common_id>.js".
+//      *
+//      * @return string
+//      */
+//     public function webpackCommonJs()
+//     {
+//         $file          = $this->web_dir . '/' . $this->common_js;
+//         $modified_time = file_exists($this->web_dir . '/' . $this->common_js) ? filemtime($file) : 0;
+//         return $this->common_js . '?' . $modified_time;
+//     }
 
-    /**
-     * Example: "<output_path>/<common_id>.css".
-     *
-     * @return string
-     */
-    public function webpackCommonCss()
-    {
-        $file          = $this->web_dir . '/' . $this->common_css;
-        $modified_time = file_exists($this->web_dir . '/' . $this->common_css) ? filemtime($file) : 0;
-        return $this->common_css . '?' . $modified_time;
-    }
+//     /**
+//      * Example: "<output_path>/<common_id>.css".
+//      *
+//      * @return string
+//      */
+//     public function webpackCommonCss()
+//     {
+//         $file          = $this->web_dir . '/' . $this->common_css;
+//         $modified_time = file_exists($this->web_dir . '/' . $this->common_css) ? filemtime($file) : 0;
+//         return $this->common_css . '?' . $modified_time;
+//     }
 }

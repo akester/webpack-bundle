@@ -72,9 +72,9 @@ class WebpackCompilerPass implements CompilerPassInterface
             ->getDefinition('hostnet_webpack.bridge.twig_extension')
             ->replaceArgument(1, $web_dir)
             ->replaceArgument(2, $public_path)
-            ->replaceArgument(3, str_replace($web_dir, '', $dump_path))
-            ->replaceArgument(4, sprintf('%s/%s.js', $public_path, $config['output']['common_id']))
-            ->replaceArgument(5, sprintf('%s/%s.css', $public_path, $config['output']['common_id']));
+            ->replaceArgument(3, str_replace($web_dir, '', $dump_path));
+//             ->replaceArgument(4, sprintf('%s/%s.js', $public_path, $config['output']['common_id']))
+//             ->replaceArgument(5, sprintf('%s/%s.css', $public_path, $config['output']['common_id']));
 
         // Ensure webpack is installed in the given (or detected) node_modules directory.
         if (false === ($webpack = realpath($config['node']['node_modules_path'] . '/webpack/bin/webpack.js'))) {
