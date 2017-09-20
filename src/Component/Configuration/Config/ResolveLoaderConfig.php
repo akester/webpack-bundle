@@ -24,9 +24,9 @@ final class ResolveLoaderConfig implements ConfigInterface, ConfigExtensionInter
     {
         $this->config = $config;
 
-        // Apply node_modules path to resolveLoader.root
+        // Apply node_modules path to resolveLoader.modules
         if (! empty($config['node']['node_modules_path'])) {
-            $this->config['resolve_loader']['root'][] = $config['node']['node_modules_path'];
+            $this->config['resolve_loader']['modules'][] = $config['node']['node_modules_path'];
         }
     }
 
@@ -37,7 +37,7 @@ final class ResolveLoaderConfig implements ConfigInterface, ConfigExtensionInter
             ->arrayNode('resolve_loader')
                 ->addDefaultsIfNotSet()
                 ->children()
-                    ->arrayNode('root')
+                    ->arrayNode('modules')
                         ->prototype('scalar')->end()
                 ->end()
             ->end();

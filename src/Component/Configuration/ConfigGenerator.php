@@ -73,11 +73,11 @@ class ConfigGenerator
             $this->getChunks(CodeBlock::RESOLVE, false, false),
             JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
         ) . ',';
+        $code[] = 'resolveLoader : ' . json_encode(
+            $this->getChunks(CodeBlock::RESOLVE_LOADER, false, false),
+            JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+        ) . ',';
 
-//         $code[] = 'resolveLoader : ' . json_encode(
-//             $this->getChunks(CodeBlock::RESOLVE_LOADER, false, false),
-//             JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-//         ) . ',';
 //         $code[] = 'plugins : [';
 //         $code[] = $tab1 . $this->getChunks(CodeBlock::PLUGIN, ', ' . PHP_EOL . $tab1, ',' . PHP_EOL . $tab1);
 //         $code[] = '],';
